@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-3">
+  <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="d-flex gap-2">
+    <input type="file" name="files" multiple accept="video/*" class="form-control-file" />
+    <button class="btn btn-primary">Upload</button>
+  </form>
+</div>
+
+<div class="mb-2 d-flex align-items-center gap-2">
+  <button id="select-all" class="btn btn-outline-secondary btn-sm">Select All</button>
+  <button id="deselect-all" class="btn btn-outline-secondary btn-sm">Deselect All</button>
+  <button id="delete-selected" class="btn btn-danger btn-sm">Delete Selected</button>
+  <div class="ms-auto text-muted">Total: {{ videos|length }}</div>
+</div>
+
+<div class="row" id="gallery">
+  {% for v in videos %}
+  <div class="col-md-4 mb-4 video-card" data-id="{{ v.id }}">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-start gap-2">
+          <input type="checkbox" class="form-check-input ms-0 select-checkbox" style="margin-right:8px;" />
+          <div class="thumbnail-wrapper position-relative">
+            <a href="{{ url_for('video_detail', video_id=v.id) }}" class="d-inline-block">
+              <img
+                src="{{ url_for('thumbnail_file', filename=v.thumbnail) }}"
+                alt="thumb"
+                class="thumbnail-img"
+              />
+              <div class="overlay-text">{{ v.overlay_text }}</div>
+            </a>
+          </div>
+        </div>
+
+        <h6 class="mt-2 mb-1 card-title">{{ v.title or v.filename }}</h6>
+        <small class="text-muted">{{ v.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+
+        <div class="mt-2 d-flex gap-2 crud-icons">
+          <a href="{{ url_for('video_detail', video_id=v.id) }}" class="btn btn-sm btn-outline-primary" title="View">
+            <i class="fa fa-eye"></i>
+          </a>
+          <a href="{{ url_for('download_video', video_id=v.id) }}" class="btn btn-sm btn-outline-secondary" title="Download">
+            <i class="fa fa-download"></i>
+          </a>
+          <button class="btn btn-sm btn-outline-danger btn-delete" data-id="{{ v.id }}" title="Delete">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script src="{{ url_for('static', filename='gallery.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,114 @@
+/* Basic gallery and detail styling */
+
+/* ensure thumbnails are 50% width as requested */
+.thumbnail-img {
+  width: 50%;
+  height: auto;
+  display: block;
+}
+
+/* overlay text on thumbnails in gallery */
+.thumbnail-wrapper {
+  display: inline-block;
+}
+.thumbnail-wrapper .overlay-text {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  color: white;
+  text-shadow: 0 0 6px rgba(0,0,0,0.8);
+  font-weight: 600;
+  max-width: 45%;
+  pointer-events: none;
+  font-size: 0.9rem;
+}
+
+/* For detail page the left area should be at least 50% width */
+.detail-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  align-content: stretch;
+  /* keep the layout from collapsing */
+  width: 100%;
+}
+
+/* Left panel (video) should try to take 50% width but allow shrink on small screens */
+.video-left {
+  flex: 0 0 50%;
+  min-width: 320px;
+  /* make the left column span the viewport height so video can be 100% of screen */
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Make the video itself fill the screen height and preserve aspect ratio */
+.video-left video#player {
+  height: 100vh;
+  max-height: 100vh;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+  background: black;
+}
+
+/* Editor takes remaining space */
+.editor-right {
+  flex: 1 1 50%;
+  min-width: 280px;
+  /* keep the editor column full-height so the editor area can use the available vertical space */
+  height: 100vh;
+  overflow: auto;
+}
+
+/* Make the Ace editor text larger for better readability */
+.editor-right .ace_editor,
+.editor-right .ace_scroller,
+.editor-right .ace_text-layer {
+  font-size: 20px !important;
+  line-height: 1.4;
+}
+
+/* Ensure the editor element (#editor) expands to most of the column height */
+.editor-right #editor {
+  /* subtract some space for the title input and buttons (adjust if your header/footer sizes differ) */
+  height: calc(100vh - 160px) !important;
+  box-sizing: border-box;
+}
+
+/* Large thumbnail on detail page: keep thumbnail width at 50% as before */
+.thumbnail-large img#thumb-img {
+  width: 50%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.thumbnail-large {
+  position: relative;
+}
+
+/* overlay for large thumbnail */
+.overlay-text-large {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  color: white;
+  text-shadow: 0 0 8px rgba(0,0,0,0.9);
+  font-size: 1.2rem;
+  max-width: 48%;
+  pointer-events: none;
+}
+
+/* small layout tweaks */
+.video-card .card-body {
+  position: relative;
+}
+.crud-icons .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+}
