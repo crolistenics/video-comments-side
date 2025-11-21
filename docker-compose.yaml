@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crolistenics/video-comments-side:latest
+    ports:
+      - "5000:5000"
+    environment:
+      # Set FLASK_SECRET via your deploy environment (Coolify allows setting env vars)
+      - FLASK_SECRET=${FLASK_SECRET:-change-me-in-prod}
+    volumes:
+      # Persist uploaded videos and generated thumbnails and the SQLite DB
+      - ./uploads:/app/uploads
+      - ./thumbnails:/app/thumbnails
+      - ./data/videos.db:/app/videos.db
+    restart: unless-stopped
