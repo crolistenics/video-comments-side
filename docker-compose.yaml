@@ -6,13 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     image: crolistenics/video-comments-side:latest
+    # Publish container port 5000, but do NOT force the same host port.
+    # With the short-syntax below Docker will pick an available host port.
     ports:
-      - "5000:5000"
+      - "5000"
     environment:
-      # Set FLASK_SECRET via your deploy environment (Coolify allows setting env vars)
       - FLASK_SECRET=${FLASK_SECRET:-change-me-in-prod}
     volumes:
-      # Persist uploaded videos and generated thumbnails and the SQLite DB
       - ./uploads:/app/uploads
       - ./thumbnails:/app/thumbnails
       - ./data/videos.db:/app/videos.db
